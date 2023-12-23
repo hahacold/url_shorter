@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>短網址超人</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image: url('sky.jpg');
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h1 {
+            font-size: 4em;
+            color: #fff; /* Change the color of the title text */
+            margin-bottom: 20px;
+        }
+
+        form {
+            background-color: transparent; /* Fully transparent background */
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        /* Styling for the first input */
+        label[for="url"] {
+            background-color: #3498db; /* Change the background color */
+            padding: 8px; /* Change the padding */
+            color: #fff; /* Change the text color */
+        }
+
+        #url {
+            background-color: #ecf0f1; /* Change the background color */
+            padding: 12px; /* Change the padding */
+        }
+
+        /* Styling for the second input */
+        label[for="shorturl"] {
+            background-color: #e74c3c; /* Change the background color */
+            padding: 8px; /* Change the padding */
+            color: #fff; /* Change the text color */
+        }
+
+        #shorturl {
+            background-color: #f2dede; /* Change the background color */
+            padding: 12px; /* Change the padding */
+        }
+
+        /* Styling for the third input */
+        label[for="countdown"] {
+            background-color: #2ecc71; /* Change the background color */
+            padding: 8px; /* Change the padding */
+            color: #fff; /* Change the text color */
+        }
+
+        #countdown {
+            background-color: #d0e9c6; /* Change the background color */
+            padding: 12px; /* Change the padding */
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+        form p {
+            display: flex;
+            justify-content: space-around;
+        }
+        .countdown-options {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .countdown-options label {
+            flex: 1;
+            text-align: center;
+            background-color: #3498db; /* Change the background color */
+            padding: 8px; /* Change the padding */
+            color: #fff; /* Change the text color */
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .countdown-options label:hover {
+            background-color: #2980b9; /* Change the hover background color */
+        }
+
+        .countdown-options input {
+            display: none; /* Hide the radio buttons */
+        }
+
+        .countdown-options span {
+            font-size: 16px;
+            display: block;
+        }
+
+        .countdown-options input:checked + span {
+            font-size: 30px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+
+    <form id="add-url-form">
+        <h1>短網址超人</h1>
+
+        <label for="url">輸入欲跳轉網址</label>
+        <input type="text" id="url" name="url" required>
+
+        <label for="shorturl">shorturl/自訂義網址 or 使用預設 </label>
+        <input type="text" id="shorturl" name="shorturl" required>
+
+        <label for="countdown">限制使用次數</label>
+        <div class="countdown-options">
+            <label>
+                <input name="countdown" type="radio" value=1 checked>
+                <span>1次</span>
+            </label>
+            <label>
+                <input name="countdown" type="radio" value=5>
+                <span>5次</span>
+            </label>
+            <label>
+                <input name="countdown" type="radio" value=10>
+                <span>10次</span>
+            </label>
+        </div>
+        <button type="submit">新增</button>
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#add-url-form').submit(function (event) {
+                event.preventDefault();
+
+                const url = $('#url').val();
+                const shorturl = $('#shorturl').val();
+                const countdown = $('input[name="countdown"]:checked').val()
+                console.log(countdown)
+                $.post('urls', { url, shorturl, countdown }, function (response) {
+                    // Handle the response if needed
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
