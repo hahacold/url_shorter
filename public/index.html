@@ -158,7 +158,7 @@
         <input type="text" id="url" name="url" required>
 
         <label for="shorturl">shorturl/自訂義網址 or 使用預設 </label>
-        <input type="text" id="shorturl" name="shorturl" required>
+        <input type="text" id="shorturl" name="shorturl">
 
         <label for="countdown">限制使用次數</label>
         <div class="countdown-options">
@@ -178,10 +178,10 @@
 
         <button type="submit">新增</button>
         <div class="button-container">
-            <a href="https://docs.google.com/presentation/d/1vtGpLgBZS3UxcrRR9pMn2bB72oZ3GEt1raxC5KKTK5Q/edit?usp=sharing">文檔</a>
+            <a href="https://docs.google.com/presentation/d/1vtGpLgBZS3UxcrRR9pMn2bB72oZ3GEt1raxC5KKTK5Q/edit?usp=sharing" target="_blank">文檔</a>
         </div>
         <div class="button-container">
-            <a href="https://docs.google.com/presentation/d/1mVKcvw_oMYQMcuc4KiJetTMAcx6JeJvX0ELNtShjSJs/edit?usp=sharing">提案報告</a>
+            <a href="https://docs.google.com/presentation/d/1mVKcvw_oMYQMcuc4KiJetTMAcx6JeJvX0ELNtShjSJs/edit?usp=sharing"  target="_blank">提案報告</a>
         </div>
     </form>
 
@@ -195,7 +195,7 @@
                 const shorturl = $('#shorturl').val();
                 const countdown = $('input[name="countdown"]:checked').val()
                 console.log(countdown)
-                $.post('urls', { url, shorturl, countdown }, function (response) {
+                $.post('/', { url, shorturl, countdown }, function (response) {
                     // Handle the response if needed
                 });
             });

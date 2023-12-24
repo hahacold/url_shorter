@@ -14,8 +14,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // 引入Router (routes目錄底下的todo.js)
-const studentRouter = require("./routes/urls");
+const urlRouter = require("./routes/urls");
 // 此處的/todo代表連線到該Router的基本路徑為 http://localhost:3000/todo
-app.use("/urls", urlRouter);
+app.use("/", urlRouter);
 
 module.exports = app;

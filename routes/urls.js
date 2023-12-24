@@ -1,6 +1,8 @@
 // 引入套件
 const express = require("express");
 const mongoose = require('mongoose');
+
+const { generateKey } = require("crypto");
 const router = express.Router();
 
 // 連接到 MongoDB 資料庫
@@ -43,65 +45,101 @@ router.get("/", async (req, res) => {
         // 找出Todo資料資料表中的全部資料
         const url = await Url.find();
         // 將回傳的資訊轉成Json格式後回傳
-        res.json(url);
+        //res.json(url);
     } catch (err) {
         // 如果資料庫出現錯誤時回報 status:500 並回傳錯誤訊息 
         res.status(500).json({ message: err.message })
+        return;
     }
 });
 
 // 新增待辦事項
-// 將Method改為Post
+// 將Method改為Posft
 router.post("/", async (req, res) => {
     // 從req.body中取出資料
+
+    //進行檢查
+    try {
+        originalUrl = new URL(req.body.url);
+    } catch (err) {
+        res.redirect("/urlinvaild.html");
+        //return res.status(400).send({ error: 'invalid URL' });
+    }
+    //檢查是否為Url結構
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+    function generateString(length) {
+        let result = ' ';
+        const charactersLength = characters.length;
+        for (let i = 0; i < length; i++) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+
+        return result;
+    }
+    if (req.body.shorturl == null) {
+        req.body.shorturl = generateString(5)
+    }
     const url = new Url({
         url: req.body.url,
         shorturl: req.body.shorturl,
         countdown: req.body.countdown
     });
-    //進行檢查
+    try {
+        // 找出Todo資料資料表中的全部資料
+        const url = await Url.find();
+        
+    } catch (err) {
+        // 如果資料庫出現錯誤時回報 status:500 並回傳錯誤訊息 
+        res.status(500).json({ message: err.message })
+        return;
+    }
     
     try {
         // 使用.save()將資料存進資料庫
         const newUrl = await url.save();
         // 回傳status:201代表新增成功 並回傳新增的資料
-        res.status(201).json(newUrl);
+        //res.redirect("urlinvaild.html");
+        //res.status(201).json(newUrl);
+        return
     } catch (err) {
         // 錯誤訊息發生回傳400 代表使用者傳入錯誤的資訊
-        res.redirect("public\\urlinvaild.html");
-        res.status(400).json({ message: err.message })
+        res.redirect("urlinvaild.html");
+        //res.status(400).json({ message: err.message })
+        return
     }
-    
-    
+
+
 });
 
 // 在網址中傳入id用以查詢
-router.get("/:id", async (req, res) => {
+router.get("/:shorturl", async (req, res) => {
     try {
-        const url = await Url.findById(req.params.id);
-        if (student == undefined) {
-            res.redirect(url.url);
-            return res.status(404).json({ message: "Can't find url" })
+        const url = await Url.findOne({shorturl: req.params.shorturl});
+        if (url == undefined) {
+            res.redirect("urlnotfound.html");
+            
+            //return res.status(404).json({ message: "Can't find url" })
         } else {
-            res.redirect("public\\urlnotfound.html");
-            if(url.countdown === 0){
-                Url.findByIdAndDelete(req.params.id);
-        
-            } else{
-                url.countdown -= 1;
-                url.save();
-            }
+            res.redirect(url.url);
+            url.countdown -= 1;
+            
             //return res.status(200).json(student);
+        }
+        if (url.countdown <= 0) {
+            await Url.findOneAndDelete({shorturl: req.params.shorturl})
+            //Url.findByIdAndDelete(req.params.id);
+
+        } else {
+            
+            url.save();
         }
     } catch (err) {
         return res.status(500).json({ message: err.message });
     }
 });
 
-app.get('/redirect', (req, res) => {
-    // 重定向到 "public\\index.html"
-    res.redirect("public\\index.html");
-});
+
 // // 更新代辦事項
 // router.put("/:id", async (req, res) => {
 //     try {
