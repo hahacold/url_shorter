@@ -196,7 +196,7 @@
                 const countdown = $('input[name="countdown"]:checked').val()
                 console.log(countdown)
                 $.post('/', { url, shorturl, countdown }, function (response) {
-                    // Handle the response if needed
+                    console.log(response)
                 });
             });
         });

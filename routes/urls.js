@@ -59,6 +59,7 @@ router.get("/", async (req, res) => {
 // 新增待辦事項
 // 將Method改為Posft
 router.post("/", async (req, res) => {
+    console.log("get post");
     // 從req.body中取出資料
 
     //進行檢查
@@ -66,6 +67,7 @@ router.post("/", async (req, res) => {
         originalUrl = new URL(req.body.url);
     } catch (err) {
         res.redirect("/urlinvaild.html");
+        return
         //return res.status(400).send({ error: 'invalid URL' });
     }
     //檢查是否為Url結構
@@ -121,9 +123,9 @@ router.post("/", async (req, res) => {
 router.get("/:shorturl", async (req, res) => {
     try {
         const url = await Url.findOne({shorturl: req.params.shorturl});
-        if (url == undefined) {
+        if (url === undefined) {
             res.redirect("urlnotfound.html");
-            
+            return
             //return res.status(404).json({ message: "Can't find url" })
         } else {
             res.redirect(url.url);
