@@ -68,7 +68,7 @@ router.post("/", async (req, res) => {
         res.status(201).json(newUrl);
     } catch (err) {
         // 錯誤訊息發生回傳400 代表使用者傳入錯誤的資訊
-        res.redirect();
+        res.redirect("public\\urlinvaild.html");
         res.status(400).json({ message: err.message })
     }
     
@@ -98,6 +98,10 @@ router.get("/:id", async (req, res) => {
     }
 });
 
+app.get('/redirect', (req, res) => {
+    // 重定向到 "public\\index.html"
+    res.redirect("public\\index.html");
+});
 // // 更新代辦事項
 // router.put("/:id", async (req, res) => {
 //     try {
