@@ -133,6 +133,19 @@
             font-weight: bold;
             color: #333;
         }
+        a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007BFF; /* Button background color */
+            color: #fff; /* Button text color */
+            text-align: center;
+            text-decoration: none; /* Remove underline */
+            border-radius: 5px; /* Rounded corners */
+            transition: background-color 0.3s; /* Add a smooth transition effect */
+        }
+        .button-container {
+            text-align: center; /* Center the content horizontally */
+        }
     </style>
 </head>
 
@@ -162,7 +175,14 @@
                 <span>10次</span>
             </label>
         </div>
+
         <button type="submit">新增</button>
+        <div class="button-container">
+            <a href="https://docs.google.com/presentation/d/1vtGpLgBZS3UxcrRR9pMn2bB72oZ3GEt1raxC5KKTK5Q/edit?usp=sharing">文檔</a>
+        </div>
+        <div class="button-container">
+            <a href="https://docs.google.com/presentation/d/1mVKcvw_oMYQMcuc4KiJetTMAcx6JeJvX0ELNtShjSJs/edit?usp=sharing">提案報告</a>
+        </div>
     </form>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -181,6 +201,7 @@
             });
         });
     </script>
+    
 </body>
 
 </html>
