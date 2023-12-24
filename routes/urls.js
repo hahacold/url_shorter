@@ -101,7 +101,7 @@ router.post("/", async (req, res) => {
     try {
         // 使用.save()將資料存進資料庫
         const newUrl = await url.save();
-        res.redirect("/success.html");
+        res.redirect("success.html");
         // 回傳status:201代表新增成功 並回傳新增的資料
         //res.redirect("urlinvaild.html");
         //res.status(201).json(newUrl);
