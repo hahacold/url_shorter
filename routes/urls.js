@@ -142,7 +142,8 @@ router.get("/:shorturl", async (req, res) => {
             url.save();
         }
     } catch (err) {
-        return res.status(500).json({ message: err.message });
+        return res.redirect("/urlnotfound.html");
+        //return res.status(500).json({ message: err.message });
     }
 });
 
