@@ -90,6 +90,7 @@ router.post("/", async (req, res) => {
     const url = new Url({
         url: req.body.url,
         shorturl: req.body.shorturl.replace('/', '%2f'),
+        shorturl: req.body.shorturl,
         countdown: req.body.countdown
     });
     // try {
