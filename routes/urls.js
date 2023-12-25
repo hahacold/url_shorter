@@ -9,6 +9,8 @@ const router = express.Router();
 //const uri = "mongodb+srv://admin:hahasocold@cluster0.yzyu61x.mongodb.net/?retryWrites=true&w=majority";
 //mongoose.connect('mongodb://localhost:27017/urldb');
 mongoose.connect("mongodb+srv://admin:hahasocold@cluster0.yzyu61x.mongodb.net/?retryWrites=true&w=majority")
+mongoose.connect('mongodb://localhost:27017/urldb');
+//mongoose.connect("mongodb+srv://admin:hahasocold@cluster0.yzyu61x.mongodb.net/?retryWrites=true&w=majority")
 // mongoose.connect('mongodb+srv://admin:admin6631@cluster0.em8n9ep.mongodb.net/?retryWrites=true&w=majority'); // 連結雲端Atlas
 //mongoose.connect(uri);
 const db = mongoose.connection;
@@ -64,8 +66,8 @@ router.post("/", async (req, res) => {
 
     //進行檢查
     try {
-
-        originalUrl = new URL(req.body.url);
+        
+        req.body.url = new URL(req.body.url);
     } catch (err) {
         res.json({status: "Urlinvaild", redirect: '/urlinvaild.html'});
         return
@@ -89,7 +91,6 @@ router.post("/", async (req, res) => {
     
     const url = new Url({
         url: req.body.url,
-        shorturl: req.body.shorturl.replace('/', '%2f'),
         shorturl: req.body.shorturl,
         countdown: req.body.countdown
     });
