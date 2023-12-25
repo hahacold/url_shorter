@@ -7,8 +7,8 @@ const router = express.Router();
 
 // 連接到 MongoDB 資料庫
 //const uri = "mongodb+srv://admin:hahasocold@cluster0.yzyu61x.mongodb.net/?retryWrites=true&w=majority";
-mongoose.connect('mongodb://localhost:27017/urldb');
-//mongoose.connect("mongodb+srv://admin:hahasocold@cluster0.yzyu61x.mongodb.net/?retryWrites=true&w=majority")
+//mongoose.connect('mongodb://localhost:27017/urldb');
+mongoose.connect("mongodb+srv://admin:hahasocold@cluster0.yzyu61x.mongodb.net/?retryWrites=true&w=majority")
 // mongoose.connect('mongodb+srv://admin:admin6631@cluster0.em8n9ep.mongodb.net/?retryWrites=true&w=majority'); // 連結雲端Atlas
 //mongoose.connect(uri);
 const db = mongoose.connection;
