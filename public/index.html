@@ -189,7 +189,7 @@
     <script>
         $(document).ready(function () {
             $('#add-url-form').submit(function (event) {
-                //event.preventDefault();
+                event.preventDefault();
 
                 const url = $('#url').val();
                 const shorturl = $('#shorturl').val();
@@ -197,6 +197,12 @@
                 console.log(countdown)
                 $.post('/', { url, shorturl, countdown }, function (response) {
                     console.log(response)
+                    if (response.status === "Success") {
+                        window.location = response.redirect;
+                    }
+                    else if(response.status === "Urlinvaild"){
+                        window.location = response.redirect;
+                    }
                 });
             });
         });

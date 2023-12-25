@@ -42,19 +42,19 @@ const Url = mongoose.model('Url', urlSchema);
 
 // 取得全部資料
 // 使用非同步，才能夠等待資料庫回應
-router.get("/", async (req, res) => {
-    // 使用try catch方便Debug的報錯訊息
-    try {
-        // 找出Todo資料資料表中的全部資料
-        const url = await Url.find();
-        // 將回傳的資訊轉成Json格式後回傳
-        //res.json(url);
-    } catch (err) {
-        // 如果資料庫出現錯誤時回報 status:500 並回傳錯誤訊息 
-        res.status(500).json({ message: err.message })
-        return;
-    }
-});
+// router.get("/", async (req, res) => {
+//     // 使用try catch方便Debug的報錯訊息
+//     try {
+//         // 找出Todo資料資料表中的全部資料
+//         const url = await Url.find();
+//         // 將回傳的資訊轉成Json格式後回傳
+//         //res.json(url);
+//     } catch (err) {
+//         // 如果資料庫出現錯誤時回報 status:500 並回傳錯誤訊息 
+//         res.status(500).json({ message: err.message })
+//         return;
+//     }
+// });
 
 // 新增待辦事項
 // 將Method改為Posft
@@ -66,7 +66,7 @@ router.post("/", async (req, res) => {
     try {
         originalUrl = new URL(req.body.url);
     } catch (err) {
-        res.redirect("/urlinvaild.html");
+        res.json({status: "Urlinvaild", redirect: '/urlinvaild.html'});
         return
         //return res.status(400).send({ error: 'invalid URL' });
     }
@@ -103,7 +103,8 @@ router.post("/", async (req, res) => {
     try {
         // 使用.save()將資料存進資料庫
         const newUrl = await url.save();
-        res.redirect("/success.html")
+        //res.redirect("/success.html")
+        res.json({status: "Success", redirect: '/success.html'});
         //res.redirect("https://ill-teal-eel-fez.cyclic.app/success.html");
         // 回傳status:201代表新增成功 並回傳新增的資料
         //res.redirect("urlinvaild.html");
@@ -111,7 +112,8 @@ router.post("/", async (req, res) => {
         return
     } catch (err) {
         // 錯誤訊息發生回傳400 代表使用者傳入錯誤的資訊
-        res.redirect("/urlinvaild.html");
+        //res.redirect("/urlinvaild.html");
+        res.json({status: "Urlinvaild", redirect: '/urlinvaild.html'});
         //res.status(400).json({ message: err.message })
         return
     }
@@ -124,7 +126,7 @@ router.get("/:shorturl", async (req, res) => {
     try {
         const url = await Url.findOne({shorturl: req.params.shorturl});
         if (url === undefined) {
-            res.redirect("/urlnotfound.html");
+            //res.redirect("/urlnotfound.html");
             return
             //return res.status(404).json({ message: "Can't find url" })
         } else {
@@ -142,7 +144,9 @@ router.get("/:shorturl", async (req, res) => {
             url.save();
         }
     } catch (err) {
+        ////這裡會回回傳redirect
         return res.redirect("/urlnotfound.html");
+        
         //return res.status(500).json({ message: err.message });
     }
 });
