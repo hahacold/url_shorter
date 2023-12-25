@@ -64,6 +64,7 @@ router.post("/", async (req, res) => {
 
     //進行檢查
     try {
+
         originalUrl = new URL(req.body.url);
     } catch (err) {
         res.json({status: "Urlinvaild", redirect: '/urlinvaild.html'});
@@ -85,20 +86,21 @@ router.post("/", async (req, res) => {
     if (req.body.shorturl == null) {
         req.body.shorturl = generateString(5)
     }
+    
     const url = new Url({
         url: req.body.url,
-        shorturl: req.body.shorturl,
+        shorturl: req.body.shorturl.replace('/', '%2f'),
         countdown: req.body.countdown
     });
-    try {
-        // 找出Todo資料資料表中的全部資料
-        const url = await Url.find();
+    // try {
+    //     // 找出Todo資料資料表中的全部資料
+    //     const url = await Url.find();
         
-    } catch (err) {
-        // 如果資料庫出app.use(express.static('public'));現錯誤時回報 status:500 並回傳錯誤訊息 
-        res.status(500).json({ message: err.message })
-        return;
-    }
+    // } catch (err) {
+    //     // 如果資料庫出app.use(express.static('public'));現錯誤時回報 status:500 並回傳錯誤訊息 
+    //     res.status(500).json({ message: err.message })
+    //     return;
+    // }
     
     try {
         // 使用.save()將資料存進資料庫
