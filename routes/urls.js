@@ -95,7 +95,7 @@ router.post("/", async (req, res) => {
         const url = await Url.find();
         
     } catch (err) {
-        // 如果資料庫出現錯誤時回報 status:500 並回傳錯誤訊息 
+        // 如果資料庫出app.use(express.static('public'));現錯誤時回報 status:500 並回傳錯誤訊息 
         res.status(500).json({ message: err.message })
         return;
     }
@@ -103,7 +103,7 @@ router.post("/", async (req, res) => {
     try {
         // 使用.save()將資料存進資料庫
         const newUrl = await url.save();
-        res.redirect("success.html")
+        res.redirect("/success.html")
         //res.redirect("https://ill-teal-eel-fez.cyclic.app/success.html");
         // 回傳status:201代表新增成功 並回傳新增的資料
         //res.redirect("urlinvaild.html");
@@ -111,7 +111,7 @@ router.post("/", async (req, res) => {
         return
     } catch (err) {
         // 錯誤訊息發生回傳400 代表使用者傳入錯誤的資訊
-        res.redirect("urlinvaild.html");
+        res.redirect("/urlinvaild.html");
         //res.status(400).json({ message: err.message })
         return
     }
@@ -124,7 +124,7 @@ router.get("/:shorturl", async (req, res) => {
     try {
         const url = await Url.findOne({shorturl: req.params.shorturl});
         if (url === undefined) {
-            res.redirect("urlnotfound.html");
+            res.redirect("/urlnotfound.html");
             return
             //return res.status(404).json({ message: "Can't find url" })
         } else {
