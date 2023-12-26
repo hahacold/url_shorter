@@ -65,7 +65,7 @@ router.post("/", async (req, res) => {
     //進行檢查
     try {
         
-        req.body.url = new URL(req.body.url);
+        isurl = new URL(req.body.url);
     } catch (err) {
         res.json({status: "Urlinvaild", redirect: '/urlinvaild.html'});
         return
